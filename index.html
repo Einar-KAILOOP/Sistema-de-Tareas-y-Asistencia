@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOCEIQAAP — Sistema de Gestión</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Forum&family=Montserrat:wght@400;500;600;700&family=Questrial&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+</head>
+
+<body>
+
+  <!-- """""""""" LOGIN """""""""" -->
+  <div id="view-login" class="view active">
+    <div class="login-box">
+      <div class="login-logo">
+        <img
+          src="https://res.cloudinary.com/djg56abwb/image/upload/v1768779042/886fe23c-407b-422e-af56-369b7965a138.png"
+          class="logo-icon" alt="Logo">
+        <div>
+          <h1>SOCEIQAAP</h1>
+          <p>Sistema de Gestión de Comisiones</p>
+        </div>
+      </div>
+      <div id="panel-login">
+        <h2>Bienvenido</h2>
+        <p class="sub">Ingresa con tu correo y contraseña</p>
+        <div class="fg"><label>Correo electrónico</label><input type="email" id="lu" placeholder="tu@email.com"></div>
+        <div class="fg"><label>Contraseña</label><input type="password" id="lp" placeholder="●●●●●●●●"></div>
+        <button class="btn-primary" id="btn-login" onclick="doLogin()">Ingresar al sistema</button>
+        <div id="login-error"
+          style="display:none;margin-top:12px;padding:10px 14px;background:#FFEBEE;border-radius:8px;font-size:13px;color:#C62828;border-left:3px solid #E53935">
+        </div>
+        <div style="margin-top:16px;text-align:center;font-size:13px;color:var(--gmid)">
+          <a href="#" onclick="showPanel('register')"
+            style="color:var(--orange);font-weight:500;text-decoration:none">Crear cuenta</a>
+        </div>
+      </div>
+
+      <div id="panel-register" style="display:none">
+        <h2>Crear cuenta</h2>
+        <p class="sub">Usa el email con el que fuiste registrado como socio</p>
+        <div class="fg"><label>Correo electrónico</label><input type="email" id="reg-email" placeholder="tu@email.com">
+        </div>
+        <div class="fg"><label>Contraseña (mín. 6 caracteres)</label><input type="password" id="reg-pass"
+            placeholder="●●●●●●●●"></div>
+        <div class="fg"><label>Confirmar contraseña</label><input type="password" id="reg-pass2" placeholder="●●●●●●●●">
+        </div>
+        <button class="btn-primary" id="btn-register" onclick="doRegister()">Crear cuenta</button>
+        <div id="register-msg"
+          style="display:none;margin-top:12px;padding:10px 14px;border-radius:8px;font-size:13px;border-left:3px solid">
+        </div>
+        <div style="margin-top:16px;text-align:center;font-size:13px;color:var(--gmid)">
+          ¿Ya tienes cuenta? <a href="#" onclick="showPanel('login')"
+            style="color:var(--orange);font-weight:500;text-decoration:none">Iniciar sesión</a>
+        </div>
+      </div>
+
+      <div id="panel-forgot" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- """""""""" APP """""""""" -->
+  <div id="view-app" class="view">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo"><img
+            src="https://res.cloudinary.com/djg56abwb/image/upload/v1768779042/886fe23c-407b-422e-af56-369b7965a138.png"
+            class="logo-icon" alt="Logo"><span>SOCEIQAAP</span></div>
+        <div class="sidebar-role">
+          <div class="rn" id="sb-name">—</div><span id="sb-role">—</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"></nav>
+      <div class="sidebar-footer">
+        <button class="btn-logout" onclick="doLogout()">  Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="topbar">
+        <div>
+          <h2 id="page-title">Resumen</h2>
+          <p id="page-sub"></p>
+        </div>
+        <div class="topbar-right">
+          <span class="badge-rol" id="tb-rol">—</span>
+          <span class="badge-com" id="tb-com">—</span>
+        </div>
+      </div>
+      <div class="content" id="content-area"></div>
+    </main>
+  </div>
+
+  <!-- MODAL CAMBIO ESTADO -->
+  <div class="modal-bg" id="modal-estado">
+    <div class="modal">
+      <h3>⚙️ Cambiar estado de tarea</h3>
+      <div class="modal-info">Esta acción modifica el estado registrado en la base de datos. Solo el líder puede
+        realizar este cambio.</div>
+      <p id="modal-desc">¿Estás seguro de cambiar el estado de esta tarea?</p>
+      <div class="modal-btns">
+        <button class="btn" onclick="closeModal()">Cancelar</button>
+        <button class="btn btn-orange" onclick="confirmEstado()">Confirmar cambio</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
