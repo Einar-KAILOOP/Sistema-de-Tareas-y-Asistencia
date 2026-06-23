@@ -1350,7 +1350,7 @@
     window.handleGridPaste = function(e, type) {
       e.preventDefault();
       const text = (e.clipboardData || window.clipboardData).getData('text');
-      const rows = text.split(/\\r?\\n/).filter(r => r.trim() !== '');
+      const rows = text.split(/\r?\n/).filter(r => r.trim() !== '');
       const target = e.target;
       const tr = target.closest('tr');
       const tbody = target.closest('tbody');
